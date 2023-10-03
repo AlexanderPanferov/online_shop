@@ -1,0 +1,26 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Смартфон",
+      "description": "Устройство для связи"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+      "name": "Холодильник",
+      "description": "Устройство для продуктов"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 6,
+    "fields": {
+      "name": "Стиральная машина",
+      "description": "Устройство для стирки"
+    }
+  }
+]
