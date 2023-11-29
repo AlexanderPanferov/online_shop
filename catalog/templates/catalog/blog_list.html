@@ -1,0 +1,43 @@
+{% extends 'catalog/base.html' %}
+
+{% block content%}
+
+<h1 class="display-4">BestShop</h1>
+<div class="col-12 mb-5">
+    <a class="btn btn-outline-primary" href="{% url 'catalog:create_blog' %}">Добавить Блог</a>
+</div>
+
+
+<div class="container">
+    <div class="row text-center">
+        {% for object in object_list %}
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{object.title|title}}</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title"></h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li></li><br>
+                        <li>- {{object.body|slice:":100"}}</li>
+                    </ul>
+                    </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="{% url 'catalog:view_blog' object.pk %}"
+                           type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                        <a href="{% url 'catalog:edit_blog' object.pk %}" type="button"
+                           class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="{% url 'catalog:delete_blog' object.pk %}" type="button"
+                           class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

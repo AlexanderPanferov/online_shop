@@ -35,7 +35,7 @@ class Product(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=150, verbose_name='заголовок')
     slug = models.CharField(max_length=150, verbose_name='slug', **NULLABLE)
-    body = models.TextField(verbose_name='содержимое'),
+    body = models.TextField(verbose_name='содержимое', **NULLABLE)
     preview = models.ImageField(upload_to='blog/', verbose_name='изображение', **NULLABLE)
     date_creation = models.DateTimeField(auto_now_add=True)
     is_published = models.BooleanField(default=True, verbose_name='опубликовано')
