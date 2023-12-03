@@ -44,7 +44,7 @@ class BlogDetailView(DetailView):
 
 class BlogCreateView(CreateView):
     model = Blog
-    fields = ('title', 'body', 'preview')
+    fields = ('title', 'body', 'preview', 'is_published')
     success_url = reverse_lazy('catalog:list_blog')
 
     def form_valid(self, form):
@@ -58,7 +58,7 @@ class BlogCreateView(CreateView):
 
 class BlogUpdateView(UpdateView):
     model = Blog
-    fields = ('title', 'body', 'preview')
+    fields = ('title', 'body', 'preview', 'is_published')
     #success_url = reverse_lazy('catalog:list_blog')
 
     def form_valid(self, form):
