@@ -10,13 +10,13 @@
         <div class="col-6">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{blog.title|title}}</h4>
+                    <h4 class="my-0 font-weight-normal">{{blog.title|title}} "{{object.slug}}"</h4>
                 </div>
                 <div class="card-body">
                     <h1 class="card-title pricing-card-title"></h1>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>{{blog.body}}</li><br>
-                        <img class="primary-img" src="{{ blog.preview.url }}" style="width: 400px; height: 350px">
+                        <img class="primary-img" src="/media/{{ object.preview }}" style="width: 400px; height: 350px">
                         <li>Дата создания - {{blog.date_creation}}</li>
                     </ul>
                     <div class="card-footer">
