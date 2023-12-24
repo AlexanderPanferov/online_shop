@@ -7,9 +7,10 @@
 
 
 <div class="container">
+    <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить продукт</a>
     <div class="row text-center">
         {% for object in object_list %}
-        <div class="col-3">
+        <div class="col-4">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">{{object.name|title}}</h4>
@@ -20,7 +21,14 @@
                         <li>Категория :{{object.category}}</li><br>
                         <li>- {{object.description|slice:":100"}}</li>
                     </ul>
-                    <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:view_product' object.pk %}">Подробнее</a>
+                    <div class="btn-group">
+                        <a href="{% url 'catalog:view_product' object.pk %}"
+                           type="button" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                        <a href="{% url 'catalog:edit_product' object.pk %}" type="button"
+                           class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                        <a href="{% url 'catalog:delete_product' object.pk %}" type="button"
+                           class="btn btn-sm btn-outline-danger">Удалить</a>
+                    </div>
                 </div>
             </div>
         </div>

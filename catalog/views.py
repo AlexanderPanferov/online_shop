@@ -3,6 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 
+from catalog.forms import CatalogForms
 from catalog.models import Product, Blog
 
 
@@ -12,6 +13,23 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = CatalogForms
+    success_url = reverse_lazy('catalog:index')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = CatalogForms
+    success_url = reverse_lazy('catalog:index')
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('catalog:index')
 
 
 def contacts(request):
@@ -28,7 +46,7 @@ class BlogListView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset =queryset.filter(is_published=True)
+        queryset = queryset.filter(is_published=True)
         return queryset
 
 
@@ -59,7 +77,8 @@ class BlogCreateView(CreateView):
 class BlogUpdateView(UpdateView):
     model = Blog
     fields = ('title', 'body', 'preview', 'is_published')
-    #success_url = reverse_lazy('catalog:list_blog')
+
+    # success_url = reverse_lazy('catalog:list_blog')
 
     def form_valid(self, form):
         if form.is_valid():
