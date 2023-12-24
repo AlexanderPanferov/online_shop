@@ -1,6 +1,6 @@
 from django import forms
 
-from catalog.models import Product
+from catalog.models import Product, Version
 
 
 class StyleFormMixin:
@@ -31,3 +31,9 @@ class CatalogForms(StyleFormMixin, forms.ModelForm):
             raise forms.ValidationError('Запрещенное описание')
 
         return cleaned_data
+
+
+class VersionForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Version
+        fields = '__all__'
