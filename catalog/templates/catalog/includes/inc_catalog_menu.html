@@ -4,5 +4,12 @@
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:index' %}">Каталог</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:list_blog' %}">Блог</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
+        {% if user.is_authenticated %}
+        <a class="p-2 btn btn-outline-primary" href="{% url 'users:profile' %}">Профиль</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'users:logout' %}">Выйти</a>
+        {% else %}
+        <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Войти</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
+        {% endif %}
     </nav>
 </div>
