@@ -7,7 +7,9 @@
 
 
 <div class="container">
+    {% if user.is_authenticated %}
     <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить продукт</a>
+    {% endif %}
     <div class="row text-center">
         {% for object in object_list %}
         <div class="col-4">
@@ -19,15 +21,19 @@
                     <h1 class="card-title pricing-card-title">$ {{object.price}}</h1>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>Категория :{{object.category}}</li><br>
-                        <li>- {{object.description|slice:":100"}}</li>
+                        <li> {{object.description|slice:":100"}}</li>
+                        <br>
+                        <li>Пользователь: {{object.owner.first_name|default:"-------"}}</li>
                     </ul>
                     <div class="btn-group">
                         <a href="{% url 'catalog:view_product' object.pk %}"
                            type="button" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                        {% if user.is_authenticated %}
                         <a href="{% url 'catalog:edit_product' object.pk %}" type="button"
                            class="btn btn-sm btn-outline-secondary">Редактировать</a>
                         <a href="{% url 'catalog:delete_product' object.pk %}" type="button"
                            class="btn btn-sm btn-outline-danger">Удалить</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

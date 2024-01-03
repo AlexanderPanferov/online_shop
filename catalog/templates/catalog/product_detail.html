@@ -1,5 +1,5 @@
 {% extends 'catalog/base.html' %}
-
+{% load my_tags %}
 {% block content%}
 
 <h1 class="display-4">BestShop</h1>
@@ -13,7 +13,7 @@
                     <h4 class="my-0 font-weight-normal">{{product.name|title}}</h4>
                 </div>
                 <div class="card-body">
-                    <img class="primary-img" src="{{ product.image.url }}" style="width: 400px; height: 350px">
+                    <img class="primary-img" src="{{ object.image|mymedia }}" style="width: 400px; height: 350px">
                     <h1 class="card-title pricing-card-title">Цена - {{product.price}}$ </h1>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>Категория - {{product.category}}</li><br>
