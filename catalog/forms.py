@@ -11,23 +11,22 @@ class StyleFormMixin:
 
 
 class CatalogForms(StyleFormMixin, forms.ModelForm):
+    error_list = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар', ]
+
     class Meta:
         model = Product
         exclude = ('owner',)
 
     def clean_name(self):
         cleaned_data = self.cleaned_data['name']
-
-        error_list = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар', ]
-        if cleaned_data in error_list:
+        if cleaned_data in self.error_list:
             raise forms.ValidationError('Запрещенное название')
 
         return cleaned_data
 
     def clean_description(self):
         cleaned_data = self.cleaned_data['description']
-        error_list = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар', ]
-        if cleaned_data in error_list:
+        if cleaned_data in self.error_list:
             raise forms.ValidationError('Запрещенное описание')
 
         return cleaned_data
