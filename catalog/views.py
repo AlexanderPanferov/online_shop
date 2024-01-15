@@ -1,11 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 
-from catalog.forms import CatalogForms, VersionForm
+from catalog.forms import CatalogForms, VersionForm, ModeratorForm
 from catalog.models import Product, Blog, Version
 
 
@@ -35,6 +36,20 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     form_class = CatalogForms
     success_url = reverse_lazy('catalog:index')
 
+    def get_form_class(self):
+        if self.request.user.groups.filter(name='mod').exists():
+            return ModeratorForm
+        else:
+            return CatalogForms
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object()
+        if self.request.user.groups.filter(name='mod').exists() or self.request.user.is_superuser:
+            return self.object
+        if self.object.owner != self.request.user:
+            raise Http404
+        return self.object
+
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
@@ -45,6 +60,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
         context_data['formset'] = formset
         return context_data
+
+
 
     def form_valid(self, form):
         context_data = self.get_context_data()

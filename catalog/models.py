@@ -27,6 +27,8 @@ class Product(models.Model):
     date_creation = models.DateTimeField(auto_now_add=True)
     date_modification = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь', **NULLABLE)
+    is_active = models.BooleanField(default=False, verbose_name="Опубликовано")
+
 
     def __str__(self):
         return f'{self.name}, {self.category}, {self.price}'

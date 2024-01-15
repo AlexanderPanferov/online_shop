@@ -15,7 +15,7 @@ class CatalogForms(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Product
-        exclude = ('owner',)
+        exclude = ('owner', 'is_active')
 
     def clean_name(self):
         cleaned_data = self.cleaned_data['name']
@@ -30,6 +30,18 @@ class CatalogForms(StyleFormMixin, forms.ModelForm):
             raise forms.ValidationError('Запрещенное описание')
 
         return cleaned_data
+
+
+class ModeratorForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('description', 'category', 'is_active')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+        self.fields["is_active"].widget.attrs['class'] = 'form-check-input'
 
 
 class VersionForm(StyleFormMixin, forms.ModelForm):
