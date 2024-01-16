@@ -8,11 +8,16 @@ from pytils.translit import slugify
 
 from catalog.forms import CatalogForms, VersionForm, ModeratorForm
 from catalog.models import Product, Blog, Version
+from catalog.services import get_categories
 
 
 class ProductListView(ListView):
     model = Product
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['categories'] = get_categories()
+        return context_data
 
 class ProductDetailView(DetailView):
     model = Product

@@ -21,3 +21,6 @@ sqlparse==0.4.4
 stack-data==0.6.3
 traitlets==5.10.1
 wcwidth==0.2.8
+
+python-dotenv~=1.0.0
+pytils~=0.4.1

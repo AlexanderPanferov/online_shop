@@ -12,6 +12,7 @@ from django.views.generic import CreateView, UpdateView
 
 from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 from users.models import User
+from users.services import send_new_password, send_verification_link
 
 
 class LoginView(BaseLoginView):
@@ -34,12 +35,7 @@ class RegisterView(CreateView):
         form.verification_code = verification_code
         user = form.save()
         user.verification_code = verification_code
-        send_mail(
-            subject='Подтверждение адреса электронной почты',
-            message=f'ссылка для верификации: http://127.0.0.1:8000/users/verify?code={user.verification_code}',
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[user.email]
-        )
+        send_verification_link(user.email, verification_code)
         return super().form_valid(form)
 
 
@@ -62,12 +58,7 @@ class ProfileView(UpdateView):
 
 def generate_new_password(request):
     new_password = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(12))
-    send_mail(
-        subject='Смена пароля',
-        message=f'Новый пароль: {new_password}',
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[request.user.email]
-    )
     request.user.set_password(new_password)
     request.user.save()
+    send_new_password(request.user.email, new_password)
     return redirect(reverse('users:login'))
